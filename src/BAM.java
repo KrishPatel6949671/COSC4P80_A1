@@ -28,15 +28,39 @@ public class BAM {
                     W[i][j] += A[k][i] * B[k][j];
                 }
             }
-            //System.out.println("Weight Matrix: \n" + Arrays.deepToString(W));
+            System.out.println("Weight Matrix: \n" + Arrays.deepToString(W));
         }
 
         //recall A -> B
-        
+        System.out.println("\nRecall B from A:");
+        for (int[] vectorA : A) {
+            int[] result = new int[m];
+            for (int j = 0; j < m; j++) {
+                int sum = 0;
+                for (int i = 0; i < n; i++) {
+                    sum += vectorA[i] * W[i][j];
+                }
+                result[j] = normalize(sum);
+            }
+            System.out.println(Arrays.toString(vectorA) + " --> " + Arrays.toString(result));
+        }
 
-
-
+        //recall B -> A
+        System.out.println("\nRecall A from B:");
+        for (int[] vectorB : B) {
+            int[] result = new int[n];
+            for (int j = 0; j < n; j++) {
+                int sum = 0;
+                for (int i = 0; i < m; i++) {
+                    sum += vectorB[i] * W[j][i];
+                }
+                result[j] = normalize(sum);
+            }
+            System.out.println(Arrays.toString(vectorB) + " --> " +Arrays.toString(result));
+        }
     }
+
+    private int normalize(int x){return x >= 0 ? 1 : -1;}
 
     public static void main(String[] args){BAM bam = new BAM();}
 }
