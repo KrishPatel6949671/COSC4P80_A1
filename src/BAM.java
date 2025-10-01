@@ -1,7 +1,6 @@
 import java.util.Arrays;
 
 public class BAM {
-
     public BAM(){
         // left side vectors
         int[][] A = {
@@ -56,11 +55,43 @@ public class BAM {
                 }
                 result[j] = normalize(sum);
             }
-            System.out.println(Arrays.toString(vectorB) + " --> " +Arrays.toString(result));
+            System.out.println(Arrays.toString(vectorB) + " --> " + Arrays.toString(result));
         }
+
+        //calculate cross talk for A vectors
+        System.out.println("\nCross Talk for A vectors:");
+        int globalCrosstalk = 0;
+
+        for (int q = 0; q < A.length; q++) {
+            int[] crosstalk = new int[m]; // same length as B
+            for (int k = 0; k < A.length; k++) {
+                if (k == q) continue; // skip self
+                int cos = dotProduct(A[q], A[k]);
+                for (int j = 0; j < m; j++) {
+                    crosstalk[j] += cos * B[k][j];
+                }
+            }
+            // global crosstalk magnitude
+            for (int val : crosstalk) {
+                globalCrosstalk += Math.abs(val);
+            }
+            System.out.println("A" + (q+1) + ": " + Arrays.toString(crosstalk));
+        }
+
+        System.out.println("\nGlobal Crosstalk = " + globalCrosstalk);
+
     }
 
-    private int normalize(int x){return x >= 0 ? 1 : -1;}
+
+    private int normalize(int x) {return x >= 0 ? 1 : -1;}
+
+    private int dotProduct(int[] v1, int[] v2) {
+        int sum = 0;
+        for (int i = 0; i < v1.length; i++) {
+            sum += v1[i] * v2[i];
+        }
+        return sum;
+    }
 
     public static void main(String[] args){BAM bam = new BAM();}
 }
