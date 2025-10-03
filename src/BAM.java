@@ -2,7 +2,9 @@
 KRISH PATEL
 Student#: 6949671
 COSC 4P80 Assignment 1
-uncomment code labelled part C and extra vectors to see crosstalk calculation
+uncomment code labelled part B to see crosstalk calculation
+uncomment extra vectors to see crosstalk effects
+git files are in here because I used git to work between my desktop and laptop
 */
 
 
